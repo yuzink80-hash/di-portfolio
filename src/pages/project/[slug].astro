@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { getProjects } from '../../lib/notion';
+import type { Project } from '../../lib/types';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project: Project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+---
+
+<Layout title={project.title}>
+  <article class="project-detail">
+    <h1>{project.title}</h1>
+    <p class="meta">
+      {project.client}
+      {project.year ? ` · ${project.year}` : ''}
+      {project.categories.length > 0 ? ` · ${project.categories.join(', ')}` : ''}
+    </p>
+
+    <VideoEmbed videoId={project.videoId} title={project.title} thumbnail={project.thumbnail} />
+
+    {project.description && <p class="description">{project.description}</p>}
+    {project.tools && <p class="tools">사용 툴: {project.tools}</p>}
+
+    <a class="back" href="/">← 목록으로</a>
+  </article>
+</Layout>

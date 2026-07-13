@@ -1,0 +1,21 @@
+---
+import type { Project } from '../lib/types';
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+---
+
+<a class="card" href={`/project/${project.slug}/`}>
+  <div class="card__thumb">
+    <img src={project.thumbnail} alt={project.title} loading="lazy" />
+  </div>
+  <div class="card__meta">
+    <h3>{project.title}</h3>
+    <p class="card__tags">
+      {project.categories.join(' · ')}
+      {project.year ? ` · ${project.year}` : ''}
+    </p>
+  </div>
+</a>

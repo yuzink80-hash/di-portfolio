@@ -1,0 +1,45 @@
+---
+interface Props {
+  videoId: string;
+  title: string;
+  thumbnail: string;
+}
+const { videoId, title, thumbnail } = Astro.props;
+---
+
+<div class="video-embed" data-video-id={videoId}>
+  {
+    videoId ? (
+      <button class="video-embed__trigger" type="button" aria-label={`${title} 영상 재생`}>
+        <img src={thumbnail} alt={title} loading="lazy" />
+        <span class="video-embed__play">▶</span>
+      </button>
+    ) : (
+      <img src={thumbnail} alt={title} loading="lazy" />
+    )
+  }
+</div>
+
+<script>
+  // 클릭 시에만 YouTube iframe을 삽입하는 lazy-load 방식.
+  // 페이지 최초 로드 시에는 썸네일 이미지만 불러오므로 초기 로딩이 가볍습니다.
+  document.querySelectorAll<HTMLElement>('.video-embed').forEach((el) => {
+    const trigger = el.querySelector('.video-embed__trigger');
+    if (!trigger) return;
+    trigger.addEventListener(
+      'click',
+      () => {
+        const videoId = el.getAttribute('data-video-id');
+        if (!videoId) return;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.setAttribute('frameborder', '0');
+        el.innerHTML = '';
+        el.appendChild(iframe);
+      },
+      { once: true }
+    );
+  });
+</script>

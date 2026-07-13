@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getProjects } from '../lib/notion';
+
+const projects = await getProjects();
+---
+
+<Layout title="포트폴리오">
+  <section class="hero">
+    <h1>DI / Color Grading Portfolio</h1>
+    <p>영상 종편 &amp; 컬러 그레이딩 작업물을 소개합니다.</p>
+  </section>
+  <section class="grid">
+    {projects.map((project) => <ProjectCard project={project} />)}
+  </section>
+</Layout>
