@@ -3,13 +3,15 @@ import type { Project } from '../lib/types';
 
 interface Props {
   project: Project;
+  featured?: boolean;
 }
-const { project } = Astro.props;
+const { project, featured = false } = Astro.props;
 ---
 
-<a class="card" href={`/project/${project.slug}/`}>
+<a class={`card ${featured ? 'card--featured' : ''}`} href={`/project/${project.slug}/`}>
   <div class="card__thumb">
     <img src={project.thumbnail} alt={project.title} loading="lazy" />
+    <span class="card__play" aria-hidden="true">▶</span>
   </div>
   <div class="card__meta">
     <h3>{project.title}</h3>

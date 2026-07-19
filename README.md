@@ -31,6 +31,7 @@ npm run dev
 | Description | 텍스트 | 작업 소개 짧은 설명 |
 | Tools | 텍스트 | 사용 툴 (예: DaVinci Resolve, Baselight) |
 | Slug | 텍스트 | (선택) URL 주소. 비워두면 제목으로 자동 생성 |
+| Featured | 체크박스 | (선택) 대표작으로 홈 화면에 크게 강조. 아무것도 체크 안 하면 최신 작업물이 자동으로 대표작이 됩니다 |
 
 프로젝트를 하나씩 행(row)으로 추가하면 됩니다.
 

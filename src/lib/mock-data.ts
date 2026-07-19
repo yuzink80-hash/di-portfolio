@@ -16,6 +16,7 @@ export const mockProjects: Project[] = [
     thumbnail: `https://i.ytimg.com/vi/${PLACEHOLDER_VIDEO_ID}/maxresdefault.jpg`,
     description: '이 항목은 예시입니다. 노션 데이터베이스를 연결하면 실제 작업물로 교체됩니다.',
     tools: 'DaVinci Resolve',
+    featured: true,
   },
   {
     slug: 'sample-doc-01',
@@ -28,6 +29,7 @@ export const mockProjects: Project[] = [
     thumbnail: `https://i.ytimg.com/vi/${PLACEHOLDER_VIDEO_ID}/maxresdefault.jpg`,
     description: '이 항목은 예시입니다. 노션 데이터베이스를 연결하면 실제 작업물로 교체됩니다.',
     tools: 'DaVinci Resolve, Baselight',
+    featured: false,
   },
   {
     slug: 'sample-cf-02',
@@ -40,5 +42,6 @@ export const mockProjects: Project[] = [
     thumbnail: `https://i.ytimg.com/vi/${PLACEHOLDER_VIDEO_ID}/maxresdefault.jpg`,
     description: '이 항목은 예시입니다. 노션 데이터베이스를 연결하면 실제 작업물로 교체됩니다.',
     tools: 'DaVinci Resolve',
+    featured: false,
   },
 ];

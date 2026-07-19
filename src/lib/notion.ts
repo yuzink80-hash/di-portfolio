@@ -107,6 +107,7 @@ async function mapPageToProject(page: any): Promise<Project> {
 
   const slugProp = richText(props.Slug);
   const slug = slugProp.length > 0 ? slugProp : slugify(title);
+  const featured = props.Featured?.checkbox === true;
 
   // 썸네일 결정: 노션 직접 업로드(만료 URL)는 빌드 시 로컬로 내려받아 영구 경로로 교체.
   const thumbSource = getThumbnailSource(props);
@@ -120,7 +121,7 @@ async function mapPageToProject(page: any): Promise<Project> {
     thumbnail = videoId ? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg` : '/placeholder.jpg';
   }
 
-  return { slug, title, client, categories, year, videoUrl, videoId, thumbnail, description, tools };
+  return { slug, title, client, categories, year, videoUrl, videoId, thumbnail, description, tools, featured };
 }
 
 export async function getProjects(): Promise<Project[]> {

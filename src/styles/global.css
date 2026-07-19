@@ -1,9 +1,13 @@
 :root {
+  /* 색보정(DI) 작업의 상징인 틸-오렌지 배색을 시스템 컬러로 사용.
+     오렌지는 하이라이트/CTA, 틸은 섀도우/구조 요소에 대응시킵니다. */
   --bg: #0a0a0a;
   --bg-elevated: #141414;
   --text: #f2f1ed;
   --text-dim: #9a968d;
-  --accent: #d4a35a;
+  --accent-warm: #e8794a;
+  --accent-cool: #2bb3a3;
+  --accent: var(--accent-warm);
   --border: #262523;
   --max-width: 1200px;
 }
@@ -13,7 +17,10 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(43, 179, 163, 0.10), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 85% 0%, rgba(232, 121, 74, 0.08), transparent 60%),
+    var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', 'Segoe UI', sans-serif;
   line-height: 1.6;
@@ -84,9 +91,10 @@ a { color: inherit; text-decoration: none; }
 }
 .card:hover {
   transform: translateY(-4px);
-  border-color: var(--accent);
+  border-color: var(--accent-cool);
 }
 .card__thumb {
+  position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #000;
@@ -96,6 +104,32 @@ a { color: inherit; text-decoration: none; }
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
+}
+.card:hover .card__thumb img {
+  transform: scale(1.03);
+}
+/* 목록 단계에서부터 "이건 영상이다"라는 신호를 주는 재생 아이콘 */
+.card__play {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 10, 0.55);
+  border: 1px solid rgba(242, 241, 237, 0.35);
+  color: var(--text);
+  font-size: 12px;
+  backdrop-filter: blur(2px);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.card:hover .card__play {
+  background: var(--accent-warm);
+  border-color: var(--accent-warm);
 }
 .card__meta {
   padding: 16px 18px 20px;
@@ -110,6 +144,30 @@ a { color: inherit; text-decoration: none; }
   font-size: 13px;
   color: var(--text-dim);
   letter-spacing: 0.02em;
+}
+
+/* 대표작 강조: 그리드에서 2칸을 차지하며 타이포 위계를 한 단계 올림 */
+.card--featured {
+  grid-column: span 2;
+}
+.card--featured .card__thumb {
+  aspect-ratio: 21 / 9;
+}
+.card--featured .card__meta h3 {
+  font-size: 22px;
+}
+.card--featured .card__play {
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+}
+@media (max-width: 720px) {
+  .card--featured {
+    grid-column: span 1;
+  }
+  .card--featured .card__thumb {
+    aspect-ratio: 16 / 9;
+  }
 }
 
 /* Project detail */

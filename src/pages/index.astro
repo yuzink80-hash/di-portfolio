@@ -4,6 +4,15 @@ import ProjectCard from '../components/ProjectCard.astro';
 import { getProjects } from '../lib/notion';
 
 const projects = await getProjects();
+
+// 노션에서 Featured 체크박스를 켠 항목을 대표작으로 강조.
+// 아무것도 체크 안 했으면 가장 최근(맨 위) 작업물을 자동으로 대표작 처리.
+const hasExplicitFeatured = projects.some((p) => p.featured);
+const featuredSlugs = new Set(
+  hasExplicitFeatured
+    ? projects.filter((p) => p.featured).map((p) => p.slug)
+    : projects.slice(0, 1).map((p) => p.slug)
+);
 ---
 
 <Layout title="포트폴리오">
@@ -12,6 +21,8 @@ const projects = await getProjects();
     <p>영상 종편 &amp; 컬러 그레이딩 작업물을 소개합니다.</p>
   </section>
   <section class="grid">
-    {projects.map((project) => <ProjectCard project={project} />)}
+    {projects.map((project) => (
+      <ProjectCard project={project} featured={featuredSlugs.has(project.slug)} />
+    ))}
   </section>
 </Layout>

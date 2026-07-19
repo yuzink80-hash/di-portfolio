@@ -9,4 +9,5 @@ export interface Project {
   thumbnail: string;
   description: string;
   tools: string;
+  featured: boolean;
 }
